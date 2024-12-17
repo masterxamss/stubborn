@@ -98,7 +98,7 @@ class RegisterType extends AbstractType
                 ],
                 'constraints' => [
                     new Assert\Regex([
-                        'pattern' => '/^[a-zA-Z0-9\s,.-]*$/',
+                        'pattern' => '/^[\p{L}0-9\s,.-]*$/u',
                         'message' => 'L\'adresse ne doit contenir que des lettres, des chiffres, des espaces et les caractères suivants : virgule, point et hífen.',
                     ]),
                     new Assert\Length([

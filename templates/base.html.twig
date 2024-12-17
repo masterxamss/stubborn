@@ -13,17 +13,21 @@
     </head>
     <body class="d-flex flex-column min-vh-100">
         <header class="container d-flex flex-wrap justify-content-center align-items-center py-3 mb-4 border-bottom">
-            <a href="/" class="d-flex flex-column align-items-left mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <a href="{{ path('app_index') }}" class="d-flex flex-column align-items-left mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
                 <img src="{{ asset('images/Logo.png') }}" width="150" alt="Logo Stubborn">
                 <span class="fs-6">Don't compromise on your look</span>
             </a>
 
             <ul class="nav nav-pills">
-                <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Features</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="{{ path('app_index') }}" class="nav-link active" aria-current="page">Accueil</a></li>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li class="nav-item"><a href="" class="nav-link">Boutique</a></li>
+                    <li class="nav-item"><a href="" class="nav-link">Panier</a></li>
+                    <li class="nav-item ps-5"><a href="\logout" class="nav-link">Se déconnecter</a></li>
+                {% else %}
+                    <li class="nav-item"><a href="{{ path('app_register') }}" class="nav-link">S'inscrire</a></li>
+                    <li class="nav-item"><a href="{{ path('app_login') }}" class="nav-link">Se connecter</a></li>    
+                {% endif %}
             </ul>
         </header>
 

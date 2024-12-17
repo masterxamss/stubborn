@@ -13,7 +13,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class RegisterController extends AbstractController
 {
-    #[Route('/register', name: 'app.register')]
+    #[Route('/register', name: 'app_register')]
     public function index(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
@@ -35,7 +35,7 @@ class RegisterController extends AbstractController
             
             $entityManager->persist($user);
             $entityManager->flush();
-            $this->addFlash('success', 'Cadastro realizado com sucesso.');
+            $this->addFlash('success', 'Enregistrement réussi.');
         }
 
         return $this->render('register/register.html.twig', [
