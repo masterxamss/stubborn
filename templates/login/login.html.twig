@@ -5,6 +5,14 @@
 
 {% block body %}
     <div class="container mt-5 w-25 flex-grow-1">
+        {% for message in app.session.flashbag.get('error') %}
+            <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+
+        {% for message in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+
         <h1 class="h3 mb-3 fw-normal">Se connecter</h1>
         <hr>
         {% if error %}

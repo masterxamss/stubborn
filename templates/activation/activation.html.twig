@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+    <main class="container flex-grow-1">
+        <h2 class="mb-4">S'inscrire</h2>
+        
+        {% for message in app.session.flashbag.get('error') %}
+            <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+
+        {% for message in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+    </main>
+    
+{% endblock %}
