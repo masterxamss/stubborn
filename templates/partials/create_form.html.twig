@@ -1,0 +1,64 @@
+{{ form_start(form, {'attr': {'class': 'product-form', 'method': 'POST', 'enctype': 'multipart/form-data', 'action': path('app_admin_create')} }) }}
+<div class="image-file__container">
+	<div class="image">
+		<img id="imagePreviewCreate" class="imagePreview" src="{{ asset('images/load_placeholder.png') }}" alt="Image preview">
+	</div>
+	<div class="input-file">
+		{{ form_widget(form.image, {'attr': {'id': 'inputImageCreate', 'class': 'form-control input-image', 'data-preview': 'imagePreviewCreate'}}) }}
+	</div>
+</div>
+
+<div class="w-100 d-flex flex-column">
+	<div class="d-flex flex-row gap-2 w-100">
+		<div class="form-group mb-3">
+			{{ form_label(form.name) }}
+			{{ form_widget(form.name) }}
+			{{ form_errors(form.name) }}
+		</div>
+
+		<div class="form-group mb-3">
+			{{ form_label(form.price) }}
+			{{ form_widget(form.price) }}
+			{{ form_errors(form.price) }}
+		</div>
+
+		{# Field Stock (XS, S, M, L, XL) #}
+		<div class="form-group mb-3">
+			{{ form_label(form.stock.XS) }}
+			{{ form_widget(form.stock.XS) }}
+			{{ form_errors(form.stock.XS) }}
+		</div>
+
+		<div class="form-group mb-3">
+			{{ form_label(form.stock.S) }}
+			{{ form_widget(form.stock.S) }}
+			{{ form_errors(form.stock.S) }}
+		</div>
+
+		<div class="form-group mb-3">
+			{{ form_label(form.stock.M) }}
+			{{ form_widget(form.stock.M) }}
+			{{ form_errors(form.stock.M) }}
+		</div>
+
+		<div class="form-group mb-3">
+			{{ form_label(form.stock.L) }}
+			{{ form_widget(form.stock.L) }}
+			{{ form_errors(form.stock.L) }}
+		</div>
+
+		<div class="form-group mb-3">
+			{{ form_label(form.stock.XL) }}
+			{{ form_widget(form.stock.XL) }}
+			{{ form_errors(form.stock.XL) }}
+		</div>
+	</div>
+
+	{# Field "highlighted" (checkbox) #}
+	<div class="form-group mb-3 d-flex flex-row justify-content-end align-items-end flex-grow-1 gap-2">
+		{{ form_widget(form.highlighted) }}
+		{{ form_widget(form.submit) }}
+        {{ form_widget(form.edit, {'attr': {'style': 'display: none'} }) }}
+	</div>
+</div>
+{{ form_end(form) }}
