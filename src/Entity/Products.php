@@ -3,8 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\ProductsRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 
 #[ORM\Entity(repositoryClass: ProductsRepository::class)]
 class Products
@@ -15,16 +16,18 @@ class Products
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le nom du produit ne peut pas être vide.")]
+    #[Assert\Regex(['pattern' => '/^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/', 'message' => 'Le nom ne doit contenir que des lettres et des espaces.',])]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $description = null;
-
     #[ORM\Column]
-    private array $sizes = [];
-
-    #[ORM\Column]
-    private array $stock = [];
+    private array $stock = [
+        'XS' => 0,
+        'S' => 0,
+        'M' => 0,
+        'L' => 0,
+        'XL' => 0
+    ];
 
     #[ORM\Column]
     private ?bool $highLighted = null;
@@ -33,6 +36,9 @@ class Products
     private ?string $image = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(['message' => 'Ce champ ne peut pas être vide.'])]
+    #[Assert\Positive(['message' => 'Le prix doit être positif.'])]
+    #[Assert\Type(['type' => 'float', 'message' => 'Ce champ doit être un nombre.'])]
     private ?float $price = null;
 
     public function getId(): ?int
@@ -52,38 +58,42 @@ class Products
         return $this;
     }
 
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): static
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function getSizes(): array
-    {
-        return $this->sizes;
-    }
-
-    public function setSizes(array $sizes): static
-    {
-        $this->sizes = $sizes;
-
-        return $this;
-    }
-
     public function getStock(): array
     {
-        return $this->stock;
+        return $this->stock ?? [
+            'XS' => 0,
+            'S' => 0,
+            'M' => 0,
+            'L' => 0,
+            'XL' => 0
+        ];
     }
 
     public function setStock(array $stock): static
     {
-        $this->stock = $stock;
+        $defaultStock = [
+            'XS' => 0,
+            'S' => 0,
+            'M' => 0,
+            'L' => 0,
+            'XL' => 0
+        ];
+
+        $this->stock = array_merge($defaultStock, $stock);
+
+        return $this;
+    }
+
+    public function getStockForSize(string $size): int
+    {
+        return $this->stock[$size] ?? 0;
+    }
+
+    public function setStockForSize(string $size, int $value): self
+    {
+        if (isset($this->stock[$size])) {
+            $this->stock[$size] = $value;
+        }
 
         return $this;
     }

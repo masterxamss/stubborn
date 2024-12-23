@@ -1,20 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminProductController!{% endblock %}
+{% block title %}Backoffice{% endblock %}
+
+{% block header %}
+    {% include 'partials/admin_header.html.twig' %}
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <main class="container flex-grow-1">
+        {# FLASH MESSAGES #}
+        <section>
+            {% include 'partials/flash_messages.html.twig' %}
+        </section>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/home/mast3r/Desktop/stubborn/src/Controller/AdminProductController.php</code></li>
-        <li>Your template at <code>/home/mast3r/Desktop/stubborn/templates/admin_product/index.html.twig</code></li>
-    </ul>
-</div>
+        {# CREATE PRODUCT FORM #}
+        <section class="mt-5 d-flex flex-row gap-4 bg-secondary bg-opacity-25 p-4">
+            {% include 'partials/create_form.html.twig' %}
+        </section>
+
+        {# EDIT PRODUCT FORM #}
+        <section class="d-flex flex-column gap-4 p-4 mt-5">
+            {% for product in products %}
+                {% include 'partials/edit_form.html.twig' %}
+            {% endfor %}
+        </section>
+    </main>
+
+    {% block javascripts %}        
+        <script src="{{ asset('js/import-image.js') }}"></script>
+    {% endblock %}
 {% endblock %}

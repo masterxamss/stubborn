@@ -1,0 +1,109 @@
+<div class="{% if errorFormId is defined and errorFormId == product.id %}has-error{% endif %} mt-5">
+	{{ form_start(editForms[product.id], {
+    'attr': {
+        'class': 'product-form',
+        'method': 'POST',
+        'enctype': 'multipart/form-data',
+        'action': path('app_admin_edit', { id: product.id }),
+        'data-preview': 'imagePreview-' ~ product.id
+    }
+		})
+	}}
+	<div class="image-file__container mb-5">
+		<div class="image">
+			<img id="imagePreview-{{ product.id }}" name="edit_image" class="imagePreview" src="{{ product.image ? asset('uploads/' ~ product.image) : asset('images/load_placeholder.png') }}" alt="Image preview">
+		</div>
+		<div class="input-file">
+			{% set image_value = product.image %}
+			{{ form_widget(editForms[product.id].image, {
+				'attr': {
+						'id': 'inputImage-' ~ product.id,
+						'name': 'inputImage-' ~ product.id,
+						'class': 'form-control input-image',
+						'data-preview': 'imagePreview-' ~ product.id,
+						'value': image_value
+				}
+				}) }}
+		</div>
+	</div>
+
+	<div class="w-100 d-flex flex-column mb-5">
+		<div class="d-flex flex-row gap-2 w-100">
+			<div class="form-group mb-3">
+				{{ form_label(editForms[product.id].name) }}
+				{{ form_widget(editForms[product.id].name) }}
+				{{ form_errors(editForms[product.id].name) }}
+			</div>
+
+			<div class="form-group mb-3">
+				{{ form_label(editForms[product.id].price) }}
+				{{ form_widget(editForms[product.id].price) }}
+				{{ form_errors(editForms[product.id].price) }}
+			</div>
+
+			{# Field Stock (XS, S, M, L, XL) #}
+			<div class="form-group mb-3">
+				{{ form_label(editForms[product.id].stock.XS) }}
+				{% set xs_value = product.stock.XS %}
+				{{ form_widget(editForms[product.id].stock.XS, {'attr': {'value': xs_value}}) }}
+				{{ form_errors(editForms[product.id].stock.XS) }}
+			</div>
+
+			<div class="form-group mb-3">
+				{{ form_label(editForms[product.id].stock.S) }}
+				{% set s_value = product.stock.S %}
+				{{ form_widget(editForms[product.id].stock.S, {'attr': {'value': s_value}}) }}
+				{{ form_errors(editForms[product.id].stock.S) }}
+			</div>
+
+			<div class="form-group mb-3">
+				{{ form_label(editForms[product.id].stock.M) }}
+				{% set m_value = product.stock.M %}
+				{{ form_widget(editForms[product.id].stock.M, {'attr': {'value': m_value}}) }}
+				{{ form_errors(editForms[product.id].stock.M) }}
+			</div>
+
+			<div class="form-group mb-3">
+				{{ form_label(editForms[product.id].stock.L) }}
+				{% set l_value = product.stock.L %}
+				{{ form_widget(editForms[product.id].stock.L, {'attr': {'value': l_value}}) }}
+				{{ form_errors(editForms[product.id].stock.L) }}
+			</div>
+
+			<div class="form-group mb-3">
+				{{ form_label(editForms[product.id].stock.XL) }}
+				{% set xl_value = product.stock.XL %}
+				{{ form_widget(editForms[product.id].stock.XL, {'attr': {'value': xl_value}}) }}
+				{{ form_errors(editForms[product.id].stock.XL) }}
+			</div>
+		</div>
+
+		{# Field "highlighted" (checkbox) #}
+		<div class="form-group mb-3 d-flex flex-row justify-content-end align-items-end flex-grow-1 gap-2">
+			{{ form_widget(editForms[product.id].highlighted) }}
+			{{ form_widget(editForms[product.id].submit, {'attr': {'style': 'display: none'} }) }}
+			{{ form_widget(editForms[product.id].edit) }}
+			<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ product.id }}">
+				Supprimer
+			</button>
+		</div>
+		<!-- Modal -->
+		<div class="modal fade" id="deleteModal-{{ product.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel-{{ product.id }}" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="deleteModalLabel-{{ product.id }}">Confirmer la suppression</h5>
+					</div>
+					<div class="modal-body">
+						<p>Vous voulez vraiment supprimer ce produit ?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+						<a href="/admin/{{ product.id }}/delete" id="confirmDeleteLink-{{ product.id }}" class="btn btn-danger">Supprimer</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{ form_end(editForms[product.id]) }}
+	<hr \>
