@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block body %}
+    <section class="container flex-grow-1 mt-5">
+        <div class="row">
+            <div class="col-6 d-flex justify-content-center border p-3">
+                <img src="{{ product.image ? asset('uploads/' ~ product.image) : asset('images/load_placeholder.png') }}" alt="Product image" width="50%">
+            </div>
+            <div class="col-6 p-5">
+                <form action="" class="h-100">
+                    <div class="form-group d-flex flex-row justify-content-between h-50">
+                        <div class="w-50">
+                            <h2 class="mb-3">{{ product.name }}</h2>
+                            <span class="fs-4">Prix - </span>
+                            <span class="text-muted fs-4">{{ product.price }} €</span>
+                        </div>                    
+                        <div class="w-50">
+                            <select name="sizes" id="sizes" class="form-select w-100">
+                                <option value="">Taille</option>
+                                <option value="dog">XS</option>
+                                <option value="cat">S</option>
+                                <option value="hamster">M</option>
+                                <option value="parrot">L</option>
+                                <option value="spider">XL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group d-flex justify-content-end align-items-end mt-5 pb-3 h-50">
+                        <button type="submit" class="btn btn-primary  p-2">Ajouter au panier</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
