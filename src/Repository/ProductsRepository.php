@@ -16,28 +16,31 @@ class ProductsRepository extends ServiceEntityRepository
         parent::__construct($registry, Products::class);
     }
 
-    //    /**
-    //     * @return Products[] Returns an array of Products objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findByPriceRange(?string $priceRange): array
+    {
+        $queryBuilder = $this->createQueryBuilder('p');
 
-    //    public function findOneBySomeField($value): ?Products
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        if ($priceRange) {
+            switch ($priceRange) {
+                case '10-29':
+                    $queryBuilder->andWhere('p.price BETWEEN :min AND :max')
+                                 ->setParameter('min', 10)
+                                 ->setParameter('max', 29);
+                    break;
+                case '30-35':
+                    $queryBuilder->andWhere('p.price BETWEEN :min AND :max')
+                                 ->setParameter('min', 30)
+                                 ->setParameter('max', 35);
+                    break;
+                case '35-50':
+                    $queryBuilder->andWhere('p.price BETWEEN :min AND :max')
+                                 ->setParameter('min', 35)
+                                 ->setParameter('max', 50);
+                    break;
+            }
+        }
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
 }

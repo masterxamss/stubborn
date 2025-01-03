@@ -6,7 +6,7 @@
 	+-------------------------------------------------------+		+-------------------------------------------------------+		+-------------------------------------------------------+
   ______| 🔸id              - integer				|	  ______| 🔸id            - integer				|		| 🔹id            - integer				|	
  |	| 🔹name            - string				|   	 |	| 🔹name          - string				|		| 🔹quantity      - integer				|
- |	| 🔹email           - string (unique)			|   	 |	| 🔹description   - text (nullable)			|		| 🔹size          - integer				| 
+ |	| 🔹email           - string (unique)			|   	 |	| 🔹description   - text (nullable)			|		| 🔹size          - string				| 
  |	| 🔹password        - string				|	 |	| 🔹sizes         - json (Ex: ["XS","S","M","L","XL"])	|    ___________| 🔸user          - integer				| 
  |	| 🔹roles           - json (default: ["ROLE_USER"])	|	 |	| 🔹stock         - json (Ex: ["XS":5, "S":3, "M":3])	|   |	     ___| 🔸product       - integer				|
  |	| 🔹deliveryAddress - string (nullable)		|	 |	| 🔹highLighted   - boolean (default: false)		|   |       |	+-------------------------------------------------------+
@@ -25,8 +25,8 @@
  |	      +--------------------------------------------------------------------+         |		  	+-------------------------------------------------------+
  |            | 🔸id            - integer					   |_________|_*ManyToOne*_     | 🔸id              - integer                           |
  |	      | 🔹totalPrice    - float					   |         |	          |	| 🔹quantity        - integer		          	|
- |	      | 🔹status        - string (default: "PENDING")		           |         |	          |	| 🔹size            - integer    			|
+ |	      | 🔹status        - string (default: "PENDING")		           |         |	          |	| 🔹size            - string    			|
  |	      | 🔹createdAt     - datetime_immutable (default: CURRENT_TIMESTAMP)  |         |            |     | 🔹price           - float    			|
- |_ManyToOne__| 🔹user          - string (default: "PENDING")			   |	     |            |_____| 🔸order           - integer                           |
+ |_ManyToOne__| 🔸user          - integer               			   |	     |            |_____| 🔸order           - integer                           |
  	      +--------------------------------------------------------------------+         |__________________| 🔸product         - integer                           |
  	      												  	+-------------------------------------------------------+

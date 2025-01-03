@@ -1,4 +1,4 @@
-<header class="container d-flex flex-wrap justify-content-center align-items-center py-3 mb-4 border-bottom">
+<header class="container d-flex flex-wrap justify-content-center align-items-center py-3 mb-4 border-bottom border-secondary border-opacity-50">
 	<a href="{{ path('app_index') }}" class="d-flex flex-column align-items-left mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
 		<img src="{{ asset('images/Logo.png') }}" width="150" alt="Logo Stubborn">
 		<span class="fs-6">Don't compromise on your look</span>
@@ -13,7 +13,7 @@
 				<a href="{{ path('app_products') }}" class="nav-link">Boutique</a>
 			</li>
 			<li class="nav-item">
-				<a href="" class="nav-link">Panier</a>
+				<a href="{{ path('app_cart') }}" class="nav-link">Panier</a>
 			</li>
 			<li class="nav-item ps-5">
 				<a href="\logout" class="nav-link">Se déconnecter</a>

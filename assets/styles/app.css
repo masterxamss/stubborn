@@ -1,3 +1,7 @@
+body{
+  background-color: #EAEDED;
+}
+
 .active{
   color: #0B5ED7 !important;
   text-decoration: underline;
@@ -52,6 +56,12 @@ input[type=file] {
   padding: 1rem;
   border-radius: 5px;
 }
+
+.bg-card-white{
+  background-color: #ffffff;
+}
+
+
 
 
 

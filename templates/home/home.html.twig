@@ -15,7 +15,7 @@
         <div class="row row-cols-1 row-cols-md-3 g-4 mt-5 mb-5">
             {% for product in products %}
                 <div class="col">
-                    <div class="card h-100">
+                    <div class="card h-100 shadow">
                         <img src="{{ product.image ? asset('uploads/' ~ product.image) : asset('images/load_placeholder.png') }}" class="card-img-top" alt="Product image">
                         <div class="card-footer d-flex justify-content-between p-3">
                             <div>
