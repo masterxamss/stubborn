@@ -11,10 +11,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\Entity;
 
 class CartController extends AbstractController
 {
+    /**
+     * Display the cart page.
+     *
+     * This function will display the cart page and calculate the total price of the items in the cart.
+     *
+     * @param EntityManagerInterface $entityManager The entity manager.
+     *
+     * @return Response The response to send back.
+     */
     #[Route('/cart', name: 'app_cart')]
     public function index(EntityManagerInterface $entityManager): Response
     {
@@ -26,10 +34,9 @@ class CartController extends AbstractController
 
         if ($cartItems) {
             foreach ($cartItems as $cart) {
-                // Obter o preço do produto e multiplicar pela quantidade
                 $productPrice = $cart->getProduct()->getPrice();
                 $quantity = $cart->getQuantity();
-                $total += $productPrice * $quantity; // Somar ao total geral
+                $total += $productPrice * $quantity;
             }
         } else {
             $this->addFlash('info', 'Panier vide.');
@@ -100,5 +107,37 @@ class CartController extends AbstractController
         // Success message
         $this->addFlash('success', 'Produit ajouté au panier');
         return $this->redirectToRoute('app_product_view', ['id' => $productId]);
+    }
+
+    /**
+     * Deletes a cart item, given its id.
+     * 
+     * This function is called by a POST request and validates the CSRF token.
+     * If the token is invalid, it redirects back with an error message.
+     * If the cart item exists, it removes it and flushes the changes.
+     * 
+     * @param string $id The id of the cart item to delete.
+     * @param Request $request The request that triggered this action.
+     * @param EntityManagerInterface $entityManager The entity manager.
+     * 
+     * @return Response The response to send back, which will be a redirect.
+     */
+    #[Route('/cart/{id}/delete', name: 'app_cart_item_delete', methods: ['POST'])]
+    public function delete(string $id, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        // Validate the CSRF token
+        $submittedToken = $request->request->get('token');
+        if (!$this->isCsrfTokenValid('delete_cart_item', $submittedToken)) {
+            $this->addFlash('error', 'Token CSRF invalide.');
+            return $this->redirectToRoute('app_products');
+        }
+
+        $cart = $entityManager->getRepository(Cart::class)->find($id);
+        if ($cart) {
+            $entityManager->remove($cart);
+            $entityManager->flush();
+        }
+        
+        return $this->redirectToRoute('app_cart');
     }
 }
