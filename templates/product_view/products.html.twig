@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil
+{% endblock %}
+
+{% block body %}
+	<main class="container flex-grow-1">
+		{% include 'partials/flash_messages.html.twig' %}
+		<div class="row row-cols-1 row-cols-md-3 g-4 mt-5 mb-5">
+			<div class="col">
+				<div class="card p-4 shadow">
+          <form action="{{ path('app_products') }}" method="GET">
+            <h2>Filtre par prix</h2>
+            <select name="price_range" class="form-select w-100 mt-3" onchange="this.form.submit()">
+              <option value="">Tous</option>
+              <option value="10-29" {% if app.request.get('price_range') == '10-29' %}selected{% endif %}>10 à 29 €</option>
+              <option value="30-35" {% if app.request.get('price_range') == '30-35' %}selected{% endif %}>30 à 35 €</option>
+              <option value="35-50" {% if app.request.get('price_range') == '35-50' %}selected{% endif %}>35 à 50 €</option>
+					  </select>
+          </form>
+				</div>
+			</div>
+			{% for product in products %}
+				<div class="col">
+					<div class="card h-100 shadow w-100">
+						<img src="{{ product.image ? asset('uploads/' ~ product.image) : asset('images/load_placeholder.png') }}" class="card-img-top" alt="Product image" style="width: 100%;">
+						<div class="card-footer d-flex justify-content-between p-3 w-100">
+							<div>
+								<h5 class="card-title">{{ product.name }}</h5>
+								<p class="card-text">Prix :
+									{{ product.price }}
+									€</p>
+							</div>
+							{% if app.user %}
+								<div class="d-flex flex-column justify-content-center">
+									<a href="/product/{{ product.id }}" class="btn btn-warning">Voir</a>
+								</div>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</main>
+
+{% endblock %}

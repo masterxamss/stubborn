@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier
+{% endblock %}
+
+{% block body %}
+	<section class="container flex-grow-1 mt-5">
+		{% if carts is not empty %}
+			<h1>Votre panier</h1>
+			{% for cart in carts %}
+				<div class="row mt-3 border border-secondary border-opacity-50 p-3 bg-card-white bg-opacity-25">
+					<div class="col-12 d-flex flex-row">
+						<div class="col-3">
+							<img src="{{ cart.product.image ? asset('uploads/' ~ cart.product.image) : asset('images/load_placeholder.png') }}" alt="product-image" width="50%">
+						</div>
+						<div class="col-3">
+							<h5 class="border-bottom border-warning p-2 fw-bold">Nom</h5>
+							<p class="pt-2 bg-secondary bg-opacity-25 align-middle m-0 p-2">{{ cart.product.name }}</p>
+						</div>
+						<div class="col-3 text-center">
+							<h5 class="border-bottom border-warning p-2 fw-bold">Prix</h5>
+							<p class="pt-2 bg-secondary bg-opacity-25 align-middle m-0 p-2">{{ cart.product.price }}
+								€</p>
+						</div>
+						<div class="col-3">
+							<div class="h-50 text-end">
+								<h5 class="border-bottom border-warning p-2 fw-bold">Taille</h5>
+								<p class="pt-2 bg-secondary bg-opacity-25 align-middle m-0 p-2">{{ cart.size }}</p>
+							</div>
+							<div class="d-flex align-items-end justify-content-end h-50 pb-3 pt-3">
+								<form action="{{ path('app_cart_item_delete', {'id': cart.id}) }}" method="POST">
+									<input type="hidden" name="token" value="{{ csrf_token('delete_cart_item') }}">           
+									<button type="submit" class="btn btn-outline-danger">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewbox="0 0 16 16">
+											<path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+										</svg>
+									</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+			<div class="row mt-5 d-flex flex-row justify-content-end">
+				<div class="col-2 border-bottom border-top border-start border-secondary border-opacity-50 bg-card-white d-flex align-items-center justify-content-center">
+					<div class="p-4 d-flex align-items-center justify-content-center bg-secondary bg-opacity-25">
+						<p class="m-0 p-0 fw-bold">Total :
+							{{ total }}
+							€</p>
+					</div>
+				</div>
+
+				<div class="col-2 border-bottom border-top border-end border-secondary border-opacity-50 bg-card-white p-3">
+					<button class="btn btn-warning btn-sm w-100 mb-2 rounded-pill">Finaliser ma command</button>
+					<button class="btn btn-warning btn-sm w-100 rounded-pill">Continuer mes achats</button>
+				</div>
+			</div>
+		{% else %}
+			{% include 'partials/flash_messages.html.twig' %}
+		{% endif %}
+	</section>
+{% endblock %}
