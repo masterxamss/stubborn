@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stubborn</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .text-danger {
+            color: red;
+        }
+    </style>
+ </head>
+<body>
+  <div class="container">
+    <h1>Verifiez votre stock</h1>
+    <div class="d-flex justify-content-center">
+        {% if products is not empty %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>XS</th>
+                        <th>S</th>
+                        <th>M</th>
+                        <th>L</th>
+                        <th>XL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                        <tr>
+                            <td>{{ product.name }}</td>
+                            <td class="{% if product.stock.XS < 10 %} text-danger {% endif %}">{{ product.stock.XS }}</td>
+                            <td class="{% if product.stock.S < 10 %} text-danger {% endif %}">{{ product.stock.S }}</td>
+                            <td class="{% if product.stock.M < 10 %} text-danger {% endif %}">{{ product.stock.M }}</td>
+                            <td class="{% if product.stock.L < 10 %} text-danger {% endif %}">{{ product.stock.L }}</td>
+                            <td class="{% if product.stock.XL < 10 %} text-danger {% endif %}">{{ product.stock.XL }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div> 
+  </div>
+ </body>
+</html>
