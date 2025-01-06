@@ -30,6 +30,7 @@ class RegisterController extends AbstractController
                 $this->addFlash('error', 'Impossible de créer l\'utilisateur');
                 return $this->render('register/register.html.twig', [
                     'form' => $form->createView(),
+                    'path' => 'register'
                 ]);
             }
 
@@ -37,18 +38,18 @@ class RegisterController extends AbstractController
 
             $activationToken = Uuid::v4();
             $user->setActivationToken($activationToken);
-            
+
             $entityManager->persist($user);
             $entityManager->flush();
 
             $mailService->sendActivationEmail($user->getEmail(), $activationToken);
 
-            $this->addFlash('success', 'Enregistrement réussi. Vérifiez votre e-mail pour activer votre compte');
+            $this->addFlash('success', 'Enregistrement réussi. Vérifiez votre e-mail pour activer votre compte 🎉');
         }
 
         return $this->render('register/register.html.twig', [
             'form' => $form->createView(),
+            'path' => 'register'
         ]);
     }
 }
-

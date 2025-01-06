@@ -82,19 +82,8 @@ class StripeController extends AbstractController
 
                 $size = $cart->getSize();
                 $stock = $cart->getProduct()->getStock();
-
-                //foreach ($stock as $key) {
-
-                //if ($key == $size) {
                 $stock[$size] = $stock[$size] - $cart->getQuantity();
                 $cart->getProduct()->setStock($stock);
-                //}
-
-                // send email if stock < 10
-                //if ($stock[$size] < 10) {
-                //$this->mailService->sendLowStockEmail($cart->getProduct()->getName(), $stock[$size]);
-                //}
-                //}
 
                 $this->entityManagerInterface->remove($cart);
                 $this->entityManagerInterface->flush();
@@ -106,19 +95,12 @@ class StripeController extends AbstractController
 
         if ($getLowStockProducts) {
             $this->mailService->sendLowStockEmail($getLowStockProducts);
-
-            /*foreach ($getLowStockProducts as $product) {
-                foreach ($product->getStock() as $key => $value) {
-                    if ($value < 10) {
-                        $this->mailService->sendLowStockEmail($product, $value);
-                    }
-                }
-            }*/
         }
 
 
         return $this->render('stripe/success.html.twig', [
             'order' => $order,
+            'path' => '',
         ]);
     }
 

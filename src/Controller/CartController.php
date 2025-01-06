@@ -37,13 +37,12 @@ class CartController extends AbstractController
                 $quantity = $cart->getQuantity();
                 $total += $productPrice * $quantity;
             }
-        } else {
-            $this->addFlash('info', 'Panier vide.');
         }
 
         return $this->render('cart/cart.html.twig', [
             'carts' => $cartItems,
-            'total' => $total
+            'total' => $total,
+            'path' => 'cart'
         ]);
     }
 
@@ -102,9 +101,7 @@ class CartController extends AbstractController
         $entityManager->persist($cart);
         $entityManager->flush();
 
-        // Success message
-        $this->addFlash('success', 'Produit ajouté au panier');
-        return $this->redirectToRoute('app_product_view', ['id' => $productId]);
+        return $this->redirectToRoute('app_cart');
     }
 
     /**

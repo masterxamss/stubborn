@@ -6,24 +6,24 @@
 
 	<ul class="nav nav-pills">
 		<li class="nav-item">
-			<a href="{{ path('app_index') }}" class="nav-link active" aria-current="page">Accueil</a>
+			<a href="{{ path('app_index') }}" class="nav-link {% if path == 'home'%} active {% endif %}" aria-current="page">Accueil</a>
 		</li>
 		{% if app.user %}
 			<li class="nav-item">
-				<a href="{{ path('app_products') }}" class="nav-link">Boutique</a>
+				<a href="{{ path('app_products') }}" class="nav-link {% if path == 'products'%} active {% endif %}">Boutique</a>
 			</li>
 			<li class="nav-item">
-				<a href="{{ path('app_cart') }}" class="nav-link">Panier</a>
+            	<a href="{{ path('app_cart') }}" class="nav-link {% if path == 'cart'%} active {% endif %}">Panier</a>
 			</li>
 			<li class="nav-item ps-5">
 				<a href="\logout" class="nav-link">Se déconnecter</a>
 			</li>
 		{% else %}
 			<li class="nav-item">
-				<a href="{{ path('app_register') }}" class="nav-link">S'inscrire</a>
+				<a href="{{ path('app_register') }}" class="nav-link {% if path == 'register'%} active {% endif %}">S'inscrire</a>
 			</li>
 			<li class="nav-item">
-				<a href="{{ path('app_login') }}" class="nav-link">Se connecter</a>
+				<a href="{{ path('app_login') }}" class="nav-link {% if path == 'login'%} active {% endif %}">Se connecter</a>
 			</li>
 		{% endif %}
 	</ul>

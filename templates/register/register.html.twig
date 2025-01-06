@@ -3,48 +3,54 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <div class="container mt-5 w-50">
-        <h2 class="mb-4">S'inscrire</h2>
-        
-        {% for message in app.session.flashbag.get('error') %}
-            <div class="alert alert-danger">{{ message }}</div>
-        {% endfor %}
+    <section class="container flex-grow-1 mt-3 mb-3 d-flex align-items-center justify-content-center">
 
-        {% for message in app.session.flashbag.get('success') %}
-            <div class="alert alert-success">{{ message }}</div>
-        {% endfor %}
+        <div class="container mt-3 border border-secondary border-opacity-50 p-3 bg-card-white bg-opacity-25 w-50">
+            <h2 class="h3 mb-3 fw-normal">S'inscrire</h2>
+            <hr>
+            {% for message in app.session.flashbag.get('error') %}
+                <div class="alert alert-danger">{{ message }}</div>
+            {% endfor %}
 
-        {{ form_start(form) }}
-            <div class="form-group mb-3">
-                {{ form_label(form.name) }}
-                {{ form_widget(form.name) }}
-                {{ form_errors(form.name) }}
-            </div>
-            <div class="form-group mb-3">
-                {{ form_label(form.email) }}
-                {{ form_widget(form.email) }}
-                {{ form_errors(form.email) }}
-            </div>
-            <div class="form-group mb-3">
-                {{ form_label(form.deliveryAddress) }}
-                {{ form_widget(form.deliveryAddress) }}
-                {{ form_errors(form.deliveryAddress) }}
-            </div>
-            <div class="form-group mb-3 w-50">
-                {{ form_label(form.password) }}
-                {{ form_widget(form.password) }}
-                {{ form_errors(form.password) }}
-            </div>
-            <div class="form-group mb-3 w-50">
-                {{ form_label(form.confirmPassword) }}
-                {{ form_widget(form.confirmPassword) }}
-                {{ form_errors(form.confirmPassword) }}
-            </div>
-            <div class="form-group">
-                {{ form_widget(form.submit) }}
-            </div>
-        {{ form_end(form) }}
-        
-        <p class="mt-3">Déjà inscrit ? <a href="{{ path('app_login') }}" class="btn btn-link">Se Connecter</a></p>
-    </div>
+            {% for message in app.session.flashbag.get('success') %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% endfor %}
+            
+            {{ form_start(form) }}
+                <div class="form-group mb-3">
+                    {{ form_label(form.name) }}
+                    {{ form_widget(form.name) }}
+                    {{ form_errors(form.name) }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form_label(form.email) }}
+                    {{ form_widget(form.email) }}
+                    {{ form_errors(form.email) }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form_label(form.deliveryAddress) }}
+                    {{ form_widget(form.deliveryAddress) }}
+                    {{ form_errors(form.deliveryAddress) }}
+                </div>
+                <div class="form-group mb-3 w-50">
+                    {{ form_label(form.password) }}
+                    {{ form_widget(form.password) }}
+                    {{ form_errors(form.password) }}
+                </div>
+                <div class="form-group mb-3 w-50">
+                    {{ form_label(form.confirmPassword) }}
+                    {{ form_widget(form.confirmPassword) }}
+                    {{ form_errors(form.confirmPassword) }}
+                </div>
+                <div class="form-group">
+                    {{ form_widget(form.submit) }}
+                </div>
+            {{ form_end(form) }}
+            <hr>
+            <div class="col-12 d-flex flex-row justify-content-start gap-3"> 
+                <p class="mt-3">Déjà inscrit ?</p>
+                <a href="{{ path('app_login') }}" class="btn btn-link mt-3 p-0 border-0">Se Connecter</a>
+            </div>  
+        </div>
+    </section>
 {% endblock %}

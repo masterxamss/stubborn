@@ -51,8 +51,8 @@ class RegisterType extends AbstractType
                     new Assert\Email([
                         'message' => 'L\'email « {{ value }} » n\'est pas valide.',
                         'mode' => 'strict',
-                ]),
-            ],
+                    ]),
+                ],
                 'required' => false
             ])
 
@@ -78,7 +78,7 @@ class RegisterType extends AbstractType
                 ]
             ])
             ->add('confirmPassword', PasswordType::class, [
-                'label' =>'Confirmer le mot de passe',
+                'label' => 'Confirmer le mot de passe',
                 'mapped' => false,
                 'attr' => [
                     'placeholder' => 'Confirmer le mot de passe',
@@ -114,7 +114,7 @@ class RegisterType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'Créer un compte',
                 'attr' => [
-                    'class' => 'btn btn-primary mt-3',
+                    'class' => 'btn btn-outline-primary rounded-pill mt-3 mb-3',
                 ]
             ])
         ;
@@ -127,4 +127,3 @@ class RegisterType extends AbstractType
         ]);
     }
 }
-
