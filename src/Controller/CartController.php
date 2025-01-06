@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Cart;
 use App\Entity\User;
 use App\Entity\Products;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +26,7 @@ class CartController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $getUser = $this->getUser();
-        
+
         $cartItems = $entityManager->getRepository(Cart::class)->findBy(['user' => $getUser]);
 
         $total = 0;
@@ -47,7 +46,6 @@ class CartController extends AbstractController
             'total' => $total
         ]);
     }
-
 
     /**
      * Add a product to the cart.
@@ -69,7 +67,7 @@ class CartController extends AbstractController
             $this->addFlash('error', 'Token CSRF invalide.');
             return $this->redirectToRoute('app_products');
         }
-    
+
         // Search for the product
         $productId = $request->request->get('product_id');
         $product = $entityManager->getRepository(Products::class)->find($productId);
@@ -77,14 +75,14 @@ class CartController extends AbstractController
             $this->addFlash('error', 'Produit introuvable.');
             return $this->redirectToRoute('app_products');
         }
-    
+
         // Validate size
         $size = $request->request->get('size');
         if (!$size) {
             $this->addFlash('error', 'Le champ "taille" est obligatoire.');
             return $this->redirectToRoute('app_product_view', ['id' => $productId]);
         }
-    
+
         // Search for the user
         $userId = $request->request->get('user');
         $user = $entityManager->getRepository(User::class)->find($userId);
@@ -92,18 +90,18 @@ class CartController extends AbstractController
             $this->addFlash('error', 'Utilisateur introuvable.');
             return $this->redirectToRoute('app_products');
         }
-    
+
         // Create the cart item
         $cart = new Cart();
         $cart->setProduct($product);
         $cart->setQuantity(1);
         $cart->setSize($size);
         $cart->setUser($user);
-    
+
         // Persist the cart item
         $entityManager->persist($cart);
         $entityManager->flush();
-    
+
         // Success message
         $this->addFlash('success', 'Produit ajouté au panier');
         return $this->redirectToRoute('app_product_view', ['id' => $productId]);
@@ -137,7 +135,7 @@ class CartController extends AbstractController
             $entityManager->remove($cart);
             $entityManager->flush();
         }
-        
+
         return $this->redirectToRoute('app_cart');
     }
 }

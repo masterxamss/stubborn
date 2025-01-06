@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CartRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Products;
 
 #[ORM\Entity(repositoryClass: CartRepository::class)]
 class Cart
@@ -23,7 +24,9 @@ class Cart
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\ManyToOne(inversedBy: 'carts')]
+    //#[ORM\ManyToOne(inversedBy: 'carts')]
+    #[ORM\ManyToOne(targetEntity: Products::class, fetch: 'EAGER')] // EAGER loading
+    #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id')]
     private ?Products $product = null;
 
     public function getId(): ?int
