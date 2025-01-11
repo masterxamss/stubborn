@@ -30,6 +30,3 @@ services:
             $stripeSecretKey: '%stripe.secret_key%'   # define secret key as a parameter
             $urlGenerator: '@router.default'          # inject router service
             $requestStack: '@request_stack'           # inject request service
-    
-    
-    

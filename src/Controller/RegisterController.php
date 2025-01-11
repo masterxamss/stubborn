@@ -36,6 +36,8 @@ class RegisterController extends AbstractController
 
             $user->setPassword($passwordHasher->hashPassword($user, $user->getPassword()));
 
+            $this->updateDeliveryAdress($form, $user);
+
             $activationToken = Uuid::v4();
             $user->setActivationToken($activationToken);
 
@@ -50,6 +52,18 @@ class RegisterController extends AbstractController
         return $this->render('register/register.html.twig', [
             'form' => $form->createView(),
             'path' => 'register'
+        ]);
+    }
+
+    private function updateDeliveryAdress($form, User $user): void
+    {
+        $deliveryAddress = $form->get('deliveryAddress')->getData();
+        $user->setDeliveryAddress([
+            'street' => $deliveryAddress['street'],
+            'city' => $deliveryAddress['city'],
+            'zipCode' => $deliveryAddress['zipCode'],
+            'state' => $deliveryAddress['state'],
+            'country' => $deliveryAddress['country']
         ]);
     }
 }

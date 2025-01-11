@@ -13,18 +13,23 @@ class ActivationController extends AbstractController
     #[Route('/activate/{token}', name: 'app_activate')]
     public function activate(string $token, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
-        $user = $userRepository->findOneBy(['activationToken' => $token]);
+        try {
+            $user = $userRepository->findOneBy(['activationToken' => $token]);
 
-        if (!$user) {
-            $this->addFlash('error', 'Token d\'activation invalide ou expiré.');
+            if (!$user) {
+                $this->addFlash('error', 'Token d\'activation invalide ou expiré.');
+                return $this->redirectToRoute('app_login');
+            }
+
+            $user->setIsVerified(true);
+            $user->setActivationToken(null);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Félicitations, votre compte a été activée avec succès ! Vous pouvez maintenant vous connecter. 🎉🎉🎉');
+            return $this->redirectToRoute('app_login');
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Une erreur s\'est produite lors de l\'activation de votre compte.');
             return $this->redirectToRoute('app_login');
         }
-
-        $user->setIsVerified(true);
-        $user->setActivationToken(null);
-        $entityManager->flush();
-
-        $this->addFlash('success', 'Félicitations, votre compte a été activée avec succès ! Vous pouvez maintenant vous connecter. 🎉🎉🎉');
-        return $this->redirectToRoute('app_login');
     }
 }

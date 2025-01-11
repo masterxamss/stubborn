@@ -22,23 +22,32 @@ class AdminProductController extends AbstractController
     #[Route('/admin', name: 'app_admin')]
     public function index(EntityManagerInterface $entityManager): Response
     {
+        try {
+            $form = $this->createForm(ProductsType::class, new Products());
 
-        $form = $this->createForm(ProductsType::class, new Products());
+            $getAllProducts = $entityManager->getRepository(Products::class)->findAll();
+  
+            $editForms = [];
 
-        $getAllProducts = $entityManager->getRepository(Products::class)->findAll();
+            foreach ($getAllProducts as $product) {
+                $editForms[$product->getId()] = $this->createForm(ProductsType::class, $product)->createView();
+            }
 
-        $editForms = [];
-
-        foreach ($getAllProducts as $product) {
-            $editForms[$product->getId()] = $this->createForm(ProductsType::class, $product)->createView();
+            return $this->render('admin/admin.html.twig', [
+                'form' => $form->createView(),
+                'editForms' => $editForms,
+                'products' => $getAllProducts,
+                'path' => 'admin'
+            ]);
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Une erreur est survenue : ' . $e->getMessage());
+            return $this->render('admin/admin.html.twig', [
+                'form' => $form->createView(),
+                'editForms' => [],
+                'products' => [],
+                'path' => 'admin'
+            ]);
         }
-
-        return $this->render('admin/admin.html.twig', [
-            'form' => $form->createView(),
-            'editForms' => $editForms,
-            'products' => $getAllProducts,
-            'path' => 'admin'
-        ]);
     }
 
     /**
@@ -51,7 +60,8 @@ class AdminProductController extends AbstractController
      */
     #[Route('/admin/create', name: 'app_admin_create', methods: ['POST'])]
     public function create(Request $request, EntityManagerInterface $entityManager): Response
-    {
+  {
+        
         $product = new Products();
         $form = $this->createForm(ProductsType::class, $product);
         $form->handleRequest($request);

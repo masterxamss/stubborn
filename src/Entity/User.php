@@ -36,8 +36,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $deliveryAddress = null;
+    #[ORM\Column(length: 255)]
+    private array $deliveryAddress = [
+        'street' => '',
+        'city' => '',
+        'zipCode' => '',
+        'state' => '',
+        'country' => '',
+    ];
 
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
@@ -143,14 +149,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getDeliveryAddress(): ?string
+    public function getDeliveryAddress(): array
     {
         return $this->deliveryAddress;
     }
 
-    public function setDeliveryAddress(string $deliveryAddress): static
+    public function setDeliveryAddress(array $deliveryAddress): static
     {
         $this->deliveryAddress = $deliveryAddress;
+
+        return $this;
+    }
+
+    public function getElementAddress(string $element): ?string
+    {
+        return $this->deliveryAddress[$element] ?? null;
+    }
+
+    public function setElementAddress(string $element, string $value): self
+    {
+        $this->deliveryAddress[$element] = $value;
 
         return $this;
     }

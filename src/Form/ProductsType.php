@@ -92,98 +92,97 @@ class ProductsType extends AbstractType
             ])
 
             ->get('stock')
-                ->add('XS', IntegerType::class, [
-                    'label' => 'Stock XS',
-                    'data' => $product->getStockForSize('XS'),
-                    'attr' => ['min' => 0],
-                    'constraints' => [
-                        new Assert\NotBlank(['message' => 'Ce champ ne peut pas être vide.']),
-                        new Assert\Type([
-                            'type' => 'integer',
-                            'message' => 'Ce champ doit être un nombre entier.',
-                        ]),
-                        new Assert\GreaterThan([
-                            'value'=> -1,
-                            'message' => 'Ce champ doit avoir une valeur positive.'
-                        ])
-                    ],
-                    'required' => false,
-                    'empty_data' => '',
-                ])
-                ->add('S', IntegerType::class, [
-                    'label' => 'Stock S',
-                    'data' => $product->getStockForSize('S'),
-                    'attr' => ['min' => 0],
-                    'constraints' => [
-                        new Assert\NotBlank(['message' => 'Ce champ ne peut pas être vide.']),
-                        new Assert\Type([
-                            'type' => 'integer',
-                            'message' => 'Ce champ doit être un nombre entier.',
-                        ]),
-                        new Assert\GreaterThan([
-                            'value'=> -1,
-                            'message' => 'Ce champ doit avoir une valeur positive.'
-                        ])
-                    ],
-                    'required' => false,
-                    'empty_data' => '',
-                ])
-                ->add('M', IntegerType::class, [
-                    'label' => 'Stock M',
-                    'data' => $product->getStockForSize('M'),
-                    'attr' => ['min' => 0],
-                    'constraints' => [
-                        new Assert\NotBlank(['message' => 'Ce champ ne peut pas être vide.']),
-                        new Assert\Type([
-                            'type' => 'integer',
-                            'message' => 'Ce champ doit être un nombre entier.',
-                        ]),
-                        new Assert\GreaterThan([
-                            'value'=> -1,
-                            'message' => 'Ce champ doit avoir une valeur positive.'
-                        ])
-                    ],
-                    'required' => false,
-                    'empty_data' => '',
-                ])
-                ->add('L', IntegerType::class, [
-                    'label' => 'Stock L',
-                    'data' => $product->getStockForSize('L'),
-                    'attr' => ['min' => 0],
-                    'constraints' => [
-                        new Assert\NotBlank(['message' => 'Ce champ ne peut pas être vide.']),
-                        new Assert\Type([
-                            'type' => 'integer',
-                            'message' => 'Ce champ doit être un nombre entier.',
-                        ]),
-                        new Assert\GreaterThan([
-                            'value'=> -1,
-                            'message' => 'Ce champ doit avoir une valeur positive.'
-                        ])
-                    ],
-                    'required' => false,
-                    'empty_data' => '',
-                ])
-                ->add('XL', IntegerType::class, [
-                    'label' => 'Stock XL',
-                    'data' => $product->getStockForSize('XL'),
-                    'attr' => ['min' => 0],
-                    'constraints' => [
-                        new Assert\NotBlank(['message' => 'Ce champ ne peut pas être vide.']),
-                        new Assert\Type([
-                            'type' => 'integer',
-                            'message' => 'Ce champ doit être un nombre entier.',
-                        ]),
-                        new Assert\GreaterThan([
-                            'value'=> -1,
-                            'message' => 'Ce champ doit avoir une valeur positive.'
-                        ])
-                    ],
-                    'required' => false,
-                    'empty_data' => '',
-                ])
+            ->add('XS', IntegerType::class, [
+                'label' => 'Stock XS',
+                'data' => $product->getStockForSize('XS'),
+                'attr' => ['min' => 0],
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'Ce champ ne peut pas être vide.']),
+                    new Assert\Type([
+                        'type' => 'integer',
+                        'message' => 'Ce champ doit être un nombre entier.',
+                    ]),
+                    new Assert\GreaterThan([
+                        'value' => -1,
+                        'message' => 'Ce champ doit avoir une valeur positive.'
+                    ])
+                ],
+                'required' => false,
+                'empty_data' => '',
+            ])
+            ->add('S', IntegerType::class, [
+                'label' => 'Stock S',
+                'data' => $product->getStockForSize('S'),
+                'attr' => ['min' => 0],
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'Ce champ ne peut pas être vide.']),
+                    new Assert\Type([
+                        'type' => 'integer',
+                        'message' => 'Ce champ doit être un nombre entier.',
+                    ]),
+                    new Assert\GreaterThan([
+                        'value' => -1,
+                        'message' => 'Ce champ doit avoir une valeur positive.'
+                    ])
+                ],
+                'required' => false,
+                'empty_data' => '',
+            ])
+            ->add('M', IntegerType::class, [
+                'label' => 'Stock M',
+                'data' => $product->getStockForSize('M'),
+                'attr' => ['min' => 0],
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'Ce champ ne peut pas être vide.']),
+                    new Assert\Type([
+                        'type' => 'integer',
+                        'message' => 'Ce champ doit être un nombre entier.',
+                    ]),
+                    new Assert\GreaterThan([
+                        'value' => -1,
+                        'message' => 'Ce champ doit avoir une valeur positive.'
+                    ])
+                ],
+                'required' => false,
+                'empty_data' => '',
+            ])
+            ->add('L', IntegerType::class, [
+                'label' => 'Stock L',
+                'data' => $product->getStockForSize('L'),
+                'attr' => ['min' => 0],
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'Ce champ ne peut pas être vide.']),
+                    new Assert\Type([
+                        'type' => 'integer',
+                        'message' => 'Ce champ doit être un nombre entier.',
+                    ]),
+                    new Assert\GreaterThan([
+                        'value' => -1,
+                        'message' => 'Ce champ doit avoir une valeur positive.'
+                    ])
+                ],
+                'required' => false,
+                'empty_data' => '',
+            ])
+            ->add('XL', IntegerType::class, [
+                'label' => 'Stock XL',
+                'data' => $product->getStockForSize('XL'),
+                'attr' => ['min' => 0],
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'Ce champ ne peut pas être vide.']),
+                    new Assert\Type([
+                        'type' => 'integer',
+                        'message' => 'Ce champ doit être un nombre entier.',
+                    ]),
+                    new Assert\GreaterThan([
+                        'value' => -1,
+                        'message' => 'Ce champ doit avoir une valeur positive.'
+                    ])
+                ],
+                'required' => false,
+                'empty_data' => '',
+            ])
         ;
-
     }
 
     public function configureOptions(OptionsResolver $resolver): void
