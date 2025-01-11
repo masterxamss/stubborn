@@ -49,11 +49,11 @@ class ProductsRepository extends ServiceEntityRepository
         $sql = "
             SELECT p.*
             FROM products p
-            WHERE JSON_UNQUOTE(JSON_EXTRACT(p.stock, '$.XS')) < 10
-            OR JSON_UNQUOTE(JSON_EXTRACT(p.stock, '$.S')) < 10
-            OR JSON_UNQUOTE(JSON_EXTRACT(p.stock, '$.M')) < 10
-            OR JSON_UNQUOTE(JSON_EXTRACT(p.stock, '$.L')) < 10
-            OR JSON_UNQUOTE(JSON_EXTRACT(p.stock, '$.XL')) < 10
+            WHERE JSON_UNQUOTE(JSON_EXTRACT(p.stock, '$.XS')) < 3
+            OR JSON_UNQUOTE(JSON_EXTRACT(p.stock, '$.S')) < 3
+            OR JSON_UNQUOTE(JSON_EXTRACT(p.stock, '$.M')) < 3
+            OR JSON_UNQUOTE(JSON_EXTRACT(p.stock, '$.L')) < 3
+            OR JSON_UNQUOTE(JSON_EXTRACT(p.stock, '$.XL')) < 3
         ";
 
         // Create ResultSetMapping

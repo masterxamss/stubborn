@@ -8,7 +8,6 @@ framework:
         
     # Note that the cache will be used ONLY if you read or write from it.
     cache: true
-
     #esi: true
     #fragments: true
 

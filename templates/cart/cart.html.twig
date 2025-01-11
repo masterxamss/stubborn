@@ -5,8 +5,9 @@
 
 {% block body %}
 	<section class="container flex-grow-1 mt-5">
-		{% if carts is not empty %}
-			<h1>Votre panier</h1>
+        {% if carts is not empty %}
+        <h1 class="">Votre Panier</h1> 
+        {% include 'partials/flash_messages.html.twig' %}
 			{% for cart in carts %}
 				<div class="row mt-3 border border-secondary border-opacity-50 p-3 bg-card-white bg-opacity-25">
 					<div class="col-12 d-flex flex-row">
@@ -52,11 +53,13 @@
 
 				<div class="col-2 border-bottom border-top border-end border-secondary border-opacity-50 bg-card-white p-3">
                     <a class="btn btn-warning btn-sm w-100 rounded-pill mb-3" href="{{ path('app_stripe') }}">Finaliser ma command</a>
-					<button class="btn btn-warning btn-sm w-100 rounded-pill">Continuer mes achats</button>
+					<a href="{{ path('app_products') }}" class="btn btn-warning btn-sm w-100 rounded-pill">Continuer mes achats</a>
 				</div>
 			</div>
 		{% else %}
-			{% include 'partials/flash_messages.html.twig' %}
+			<div class="row mt-3 border border-secondary border-opacity-50 p-3 bg-card-white bg-opacity-25">
+                 <h3 class="m-0">Votre Panier Stubborn est vide</h3>
+            </div>
 		{% endif %}
 	</section>
 {% endblock %}

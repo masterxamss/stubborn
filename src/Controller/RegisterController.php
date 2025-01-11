@@ -30,25 +30,40 @@ class RegisterController extends AbstractController
                 $this->addFlash('error', 'Impossible de créer l\'utilisateur');
                 return $this->render('register/register.html.twig', [
                     'form' => $form->createView(),
+                    'path' => 'register'
                 ]);
             }
 
             $user->setPassword($passwordHasher->hashPassword($user, $user->getPassword()));
 
+            $this->updateDeliveryAdress($form, $user);
+
             $activationToken = Uuid::v4();
             $user->setActivationToken($activationToken);
-            
+
             $entityManager->persist($user);
             $entityManager->flush();
 
             $mailService->sendActivationEmail($user->getEmail(), $activationToken);
 
-            $this->addFlash('success', 'Enregistrement réussi. Vérifiez votre e-mail pour activer votre compte');
+            $this->addFlash('success', 'Enregistrement réussi. Vérifiez votre e-mail pour activer votre compte 🎉');
         }
 
         return $this->render('register/register.html.twig', [
             'form' => $form->createView(),
+            'path' => 'register'
+        ]);
+    }
+
+    private function updateDeliveryAdress($form, User $user): void
+    {
+        $deliveryAddress = $form->get('deliveryAddress')->getData();
+        $user->setDeliveryAddress([
+            'street' => $deliveryAddress['street'],
+            'city' => $deliveryAddress['city'],
+            'zipCode' => $deliveryAddress['zipCode'],
+            'state' => $deliveryAddress['state'],
+            'country' => $deliveryAddress['country']
         ]);
     }
 }
-

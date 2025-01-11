@@ -17,7 +17,8 @@ class HomeController extends AbstractController
         $getProductsHighLight = $entityManager->getRepository(Products::class)->findBy(['highLighted' => true]);
 
         return $this->render('home/home.html.twig', [
-            'products' => $getProductsHighLight
+            'products' => $getProductsHighLight,
+            'path' => 'home'
         ]);
     }
 }

@@ -25,26 +25,38 @@ class CartController extends AbstractController
     #[Route('/cart', name: 'app_cart')]
     public function index(EntityManagerInterface $entityManager): Response
     {
-        $getUser = $this->getUser();
+        try {
+            $getUser = $this->getUser();
 
-        $cartItems = $entityManager->getRepository(Cart::class)->findBy(['user' => $getUser]);
-
-        $total = 0;
-
-        if ($cartItems) {
-            foreach ($cartItems as $cart) {
-                $productPrice = $cart->getProduct()->getPrice();
-                $quantity = $cart->getQuantity();
-                $total += $productPrice * $quantity;
+            // Check if the user is logged in
+            if (!$getUser) {
+                $this->addFlash('error', 'Vous devez être connecté pour accéder à votre panier.');
+                return $this->redirectToRoute('app_login');
             }
-        } else {
-            $this->addFlash('info', 'Panier vide.');
-        }
 
-        return $this->render('cart/cart.html.twig', [
-            'carts' => $cartItems,
-            'total' => $total
-        ]);
+            $cartItems = $entityManager->getRepository(Cart::class)->findBy(['user' => $getUser]);
+
+            $total = 0;
+
+            // Calculate the total price
+            if ($cartItems) {
+                foreach ($cartItems as $cart) {
+                    $productPrice = $cart->getProduct()->getPrice();
+                    $quantity = $cart->getQuantity();
+                    $total += $productPrice * $quantity;
+                }
+            }
+
+            return $this->render('cart/cart.html.twig', [
+                'carts' => $cartItems,
+                'total' => $total,
+                'path' => 'cart'
+            ]);
+        } catch (\Exception $e) {
+            //$this->addFlash('error', $e->getMessage());
+            $this->addFlash('error', 'Une erreur est survenue lors de la récupération du panier.');
+            return $this->redirectToRoute('app_products');
+        }
     }
 
     /**
@@ -61,50 +73,54 @@ class CartController extends AbstractController
     #[Route('/cart/add-item', name: 'app_add_to_cart', methods: ['POST'])]
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
-        // Validate the CSRF token
-        $submittedToken = $request->request->get('token');
-        if (!$this->isCsrfTokenValid('create_cart_item', $submittedToken)) {
-            $this->addFlash('error', 'Token CSRF invalide.');
+        try {
+            // Validate the CSRF token
+            $submittedToken = $request->request->get('token');
+            if (!$this->isCsrfTokenValid('create_cart_item', $submittedToken)) {
+                $this->addFlash('error', 'Token CSRF invalide.');
+                return $this->redirectToRoute('app_products');
+            }
+
+            // Search for the product
+            $productId = $request->request->get('product_id');
+            $product = $entityManager->getRepository(Products::class)->find($productId);
+            if (!$product) {
+                $this->addFlash('error', 'Produit introuvable.');
+                return $this->redirectToRoute('app_products');
+            }
+
+            // Validate size
+            $size = $request->request->get('size');
+            if (!$size) {
+                $this->addFlash('error', 'Le champ "taille" est obligatoire.');
+                return $this->redirectToRoute('app_product_view', ['id' => $productId]);
+            }
+
+            // Search for the user
+            $userId = $request->request->get('user');
+            $user = $entityManager->getRepository(User::class)->find($userId);
+            if (!$user) {
+                $this->addFlash('error', 'Utilisateur introuvable.');
+                return $this->redirectToRoute('app_products');
+            }
+
+            // Create the cart item
+            $cart = new Cart();
+            $cart->setProduct($product);
+            $cart->setQuantity(1);
+            $cart->setSize($size);
+            $cart->setUser($user);
+
+            // Persist the cart item
+            $entityManager->persist($cart);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_cart');
+        } catch (\Exception $e) {
+            //$this->addFlash('error', $e->getMessage());
             return $this->redirectToRoute('app_products');
+            $this->addFlash('error', 'Une erreur est survenue lors de l\'ajout au panier.');
         }
-
-        // Search for the product
-        $productId = $request->request->get('product_id');
-        $product = $entityManager->getRepository(Products::class)->find($productId);
-        if (!$product) {
-            $this->addFlash('error', 'Produit introuvable.');
-            return $this->redirectToRoute('app_products');
-        }
-
-        // Validate size
-        $size = $request->request->get('size');
-        if (!$size) {
-            $this->addFlash('error', 'Le champ "taille" est obligatoire.');
-            return $this->redirectToRoute('app_product_view', ['id' => $productId]);
-        }
-
-        // Search for the user
-        $userId = $request->request->get('user');
-        $user = $entityManager->getRepository(User::class)->find($userId);
-        if (!$user) {
-            $this->addFlash('error', 'Utilisateur introuvable.');
-            return $this->redirectToRoute('app_products');
-        }
-
-        // Create the cart item
-        $cart = new Cart();
-        $cart->setProduct($product);
-        $cart->setQuantity(1);
-        $cart->setSize($size);
-        $cart->setUser($user);
-
-        // Persist the cart item
-        $entityManager->persist($cart);
-        $entityManager->flush();
-
-        // Success message
-        $this->addFlash('success', 'Produit ajouté au panier');
-        return $this->redirectToRoute('app_product_view', ['id' => $productId]);
     }
 
     /**
@@ -130,10 +146,18 @@ class CartController extends AbstractController
             return $this->redirectToRoute('app_products');
         }
 
-        $cart = $entityManager->getRepository(Cart::class)->find($id);
-        if ($cart) {
-            $entityManager->remove($cart);
-            $entityManager->flush();
+        try {
+            // Delete the cart item
+            $cart = $entityManager->getRepository(Cart::class)->find($id);
+            if ($cart) {
+                $entityManager->remove($cart);
+                $entityManager->flush();
+            } else {
+                $this->addFlash('error', 'Item introuvable.');
+            }
+        } catch (\Exception $e) {
+            //$this->addFlash('error', $e->getMessage());
+            $this->addFlash('error', 'Une erreur est survenue lors de la suppression.');
         }
 
         return $this->redirectToRoute('app_cart');

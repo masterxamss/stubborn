@@ -16,9 +16,10 @@ class ProductViewController extends AbstractController
     public function getProduct(EntityManagerInterface $entityManager, int $id): Response
     {
         $getProduct = $entityManager->getRepository(Products::class)->find($id);
-        
+
         return $this->render('product_view/productView.html.twig', [
-            'product' => $getProduct
+            'product' => $getProduct,
+            'path' => 'products'
         ]);
     }
 
@@ -30,7 +31,8 @@ class ProductViewController extends AbstractController
         $products = $productsRepository->findByPriceRange($priceRange);
 
         return $this->render('product_view/products.html.twig', [
-            'products' => $products
+            'products' => $products,
+            'path' => 'products'
         ]);
     }
 }

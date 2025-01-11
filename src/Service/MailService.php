@@ -30,7 +30,7 @@ class MailService
             'activationLink' => $activationLink,
         ]);
 
-        $$this->email($toEmail, 'Stubborn - Activer votre compte', $htmlContent);
+        $this->email($toEmail, 'Stubborn - Activer votre compte', $htmlContent);
     }
 
     public function sendLowStockEmail($products): void
