@@ -20,7 +20,7 @@ class SetupDatabaseCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $commands = [
-            ['php', 'bin/console', 'doctrine:database:drop', '--force'], // Remove a base de dados, se necessário
+            ['php', 'bin/console', 'doctrine:database:drop', '--force', '--if-exists'], // Remove a base de dados, se necessário
             ['php', 'bin/console', 'doctrine:database:create'],
             ['php', 'bin/console', 'doctrine:migrations:migrate', '--no-interaction'],
             ['php', 'bin/console', 'doctrine:fixtures:load', '--no-interaction'],
