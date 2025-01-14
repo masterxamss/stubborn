@@ -10,7 +10,7 @@
     },
     "high_lighted": true,
     "image": "1.jpeg",
-    "price": 29,90
+    "price": 29.90
   },
   {
     "name": "BlueBelt",
@@ -23,7 +23,7 @@
     },
     "high_lighted": false,
     "image": "2.jpeg",
-    "price": 29,90
+    "price": 29.90
   },
   {
     "name": "Street",
@@ -36,7 +36,7 @@
     },
     "high_lighted": false,
     "image": "3.jpeg",
-    "price": 34,50
+    "price": 34.50
   },
   {
     "name": "Pokeball",
@@ -49,7 +49,7 @@
     },
     "high_lighted": true,
     "image": "4.jpeg",
-    "price": 45,00
+    "price": 45.00
   },
   {
     "name": "PinkLady",
@@ -62,7 +62,7 @@
     },
     "high_lighted": false,
     "image": "5.jpeg",
-    "price": 29,90
+    "price": 29.90
   },
   {
     "name": "Snow",
@@ -75,7 +75,7 @@
     },
     "high_lighted": false,
     "image": "6.jpeg",
-    "price": 32,00
+    "price": 32.00
   },
   {
     "name": "Greyback",
@@ -88,7 +88,7 @@
     },
     "high_lighted": false,
     "image": "7.jpeg",
-    "price": 28,50
+    "price": 28.50
   },
   {
     "name": "BlueCloud",
@@ -101,7 +101,7 @@
     },
     "high_lighted": false,
     "image": "8.jpeg",
-    "price": 45,00
+    "price": 45.00
   },
   {
     "name": "BornInUsa",
@@ -114,7 +114,7 @@
     },
     "high_lighted": true,
     "image": "9.jpeg",
-    "price": 59,90
+    "price": 59.90
   },
   {
     "name": "GreenSchool",
@@ -127,6 +127,6 @@
     },
     "high_lighted": false,
     "image": "10.jpeg",
-    "price": 42,20
+    "price": 42.20
   }
 ]
