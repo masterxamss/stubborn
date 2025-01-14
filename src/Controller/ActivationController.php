@@ -14,6 +14,7 @@ class ActivationController extends AbstractController
     public function activate(string $token, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
         try {
+
             $user = $userRepository->findOneBy(['activationToken' => $token]);
 
             if (!$user) {

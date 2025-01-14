@@ -32,9 +32,9 @@ class StripeService implements StripeServiceInterface
                 'allowed_countries' => ['GB', 'FR'],
             ],
             'customer' => $stripe->customers->create([
-                'name' => 'Jonh Doe',
+                'name' => $orderId->getUser()->getName(),
                 'email' => $orderId->getUser()->getEmail(),
-                'shipping' => [
+                /*'shipping' => [
                     'name' => $orderId->getUser()->getName(),
                     'address' => [
                         'line1' => $orderId->getUser()->getElementAddress('street'),
@@ -43,7 +43,7 @@ class StripeService implements StripeServiceInterface
                         'postal_code' => $orderId->getUser()->getElementAddress('zipCode'),
                         'country' => $orderId->getUser()->getElementAddress('country'),
                     ]
-                ],
+                ],*/
             ]),
             'payment_method_types' => ['card'],
             'line_items' => $this->getLinesItems($cart),

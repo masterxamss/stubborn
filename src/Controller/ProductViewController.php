@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ProductViewController extends AbstractController
 {
-    #[Route('/product/{id}', name: 'app_product_view')]
+    #[Route('/product/{id}', name: 'app_product_view', methods: ['GET'])]
     public function getProduct(EntityManagerInterface $entityManager, int $id): Response
     {
         $getProduct = $entityManager->getRepository(Products::class)->find($id);
