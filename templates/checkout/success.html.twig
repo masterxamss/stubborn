@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Success{% endblock %}
+
+{% block body %}
+    <section class="container flex-grow-1 mt-3">
+        {% include 'partials/flash_messages.html.twig' %}
+        <h1 class="h1 mb-3 fw-normal border-start border-warning border-3 p-2">Felicitation votre commande a bien été prise en compte</h1>
+        <div class="row mt-5 d-flex flex-row border border-secondary border-opacity-50 p-3 bg-card-white bg-opacity-25">
+            <h3 class="h3 mb-3 fw-normal">Récapitulatif de la commande</h2>
+            {% if orderItems is not empty and order %}
+                <div class="col-6 mt-3">
+                    {% for orderItem in orderItems %}
+                        <article class="d-flex flex-row">
+                            <div class="col-6 d-flex justify-content-center">
+                                <img src="{{ asset('uploads/' ~ orderItem.product.image) }}" alt="Product image" class="img-fluid">
+                            </div>
+                            <div class="col-6">
+                                <p><strong>Produit:</strong> {{ orderItem.product.name }}</p>
+                                <p><strong>Taille:</strong> {{ orderItem.size }}</p>
+                                <p><strong>Quantité:</strong> {{ orderItem.quantity }}</p>
+                                <p><strong>Prix:</strong> {{ orderItem.price }}€</p>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+                <div class="col-6 mt-3">
+                    <p><strong>Commande:</strong> #{{ order.id }}</p>
+                    <p><strong>Date: </strong>{{ order.createdAt|date('Y-m-d H:i:s') }}</p>
+                    <p><strong>Nom: </strong>{{ user.name }}</p>
+                    <p><strong>Email: </strong>{{ user.email }}</p>
+                    <p><strong>Adresse de livraison: </strong>{{ user.deliveryAddress }}</p>
+                    <p><strong>Total: </strong>{{ order.totalPrice }}€</p>
+                </div>
+            {% endif %}
+        </div>
+    </section>       
+{% endblock %}

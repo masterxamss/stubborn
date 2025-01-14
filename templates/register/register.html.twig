@@ -3,8 +3,8 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <section class="container border border-secondary border-opacity-50 bg-card-white p-3">
-        <header class="row">
+    <section class="container border border-secondary border-opacity-50 bg-card-white p-3 w-25">
+        <header class="row p-3">
             <h1 class="m-0">S'inscrire</h1>
             {% for message in app.session.flashbag.get('error') %}
                 <div class="alert alert-danger">{{ message }}</div>
@@ -15,10 +15,9 @@
             {% endfor %}
         </header>
         <hr>
-        <section class="row p-3">
-            {{ form_start(form, {'attr': {'class': 'd-flex flex-row gap-3'}}) }}
-                <div class="col-6">
-                    <h2 class="h3 mb-3 fw-normal">Informations personnelles</h2>
+        <section class="row p-3 d-flex flex-column justify-content-center">
+            {{ form_start(form,{'attr': {'class': 'd-flex flex-row gap-3 w-100'}}) }}
+                <div class="col-12">
                     <div class="form-group mb-3">
                         {{ form_label(form.name) }}
                         {{ form_widget(form.name) }}
@@ -29,6 +28,11 @@
                         {{ form_widget(form.email) }}
                         {{ form_errors(form.email) }}
                     </div>    
+                    <div class="form-group mb-3">
+                        {{ form_label(form.deliveryAddress) }}
+                        {{ form_widget(form.deliveryAddress) }}
+                        {{ form_errors(form.deliveryAddress) }}
+                    </div> 
                     <div class="form-group mb-3 w-50">
                         {{ form_label(form.password) }}
                         {{ form_widget(form.password) }}
@@ -41,34 +45,6 @@
                     </div>
                     <div class="form-group">
                         {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary rounded-pill mt-4'}}) }}
-                    </div>
-                </div>
-                <div class="col-6">
-                    <h2 class="h3 mb-3 fw-normal">Adresse de livraison</h2>
-                    <div class="form-group mb-3">
-                        {{ form_label(form.deliveryAddress.street) }}
-                        {{ form_widget(form.deliveryAddress.street) }}
-                        {{ form_errors(form.deliveryAddress.street) }}
-                    </div> 
-                    <div class="form-group mb-3">
-                        {{ form_label(form.deliveryAddress.city) }}
-                        {{ form_widget(form.deliveryAddress.city) }}
-                        {{ form_errors(form.deliveryAddress.city) }}
-                    </div>
-                    <div class="form-group mb-3">
-                        {{ form_label(form.deliveryAddress.zipCode) }}
-                        {{ form_widget(form.deliveryAddress.zipCode) }}
-                        {{ form_errors(form.deliveryAddress.zipCode) }}
-                    </div>
-                    <div class="form-group mb-3">
-                        {{ form_label(form.deliveryAddress.state) }}
-                        {{ form_widget(form.deliveryAddress.state) }}
-                        {{ form_errors(form.deliveryAddress.state) }}
-                    </div>
-                    <div class="form-group mb-3">
-                        {{ form_label(form.deliveryAddress.country) }}
-                        {{ form_widget(form.deliveryAddress.country) }}
-                        {{ form_errors(form.deliveryAddress.country) }}
                     </div>
                 </div>
             {{ form_end(form) }}

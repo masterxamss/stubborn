@@ -31,10 +31,10 @@ class ProductsType extends AbstractType
         $product = new Products();
 
         $builder
-            ->add('productId', HiddenType::class, [
+            /*->add('productId', HiddenType::class, [
                 'mapped' => false,
                 'data' => $options['product_id'] ?? null,
-            ])
+            ])*/
 
             ->add('image', FileType::class, [
                 'label' => false,
@@ -84,12 +84,12 @@ class ProductsType extends AbstractType
                 ]
             ])
 
-            ->add('edit', SubmitType::class, [
+            /*->add('edit', SubmitType::class, [
                 'label' => 'Modifier',
                 'attr' => [
                     'class' => 'btn btn-warning mt-3',
                 ]
-            ])
+            ])*/
 
             ->get('stock')
             ->add('XS', IntegerType::class, [

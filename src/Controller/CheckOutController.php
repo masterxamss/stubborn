@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Entity\Cart;
-use App\Entity\Products;
 use App\Entity\OrderItem;
 use App\Repository\OrderRepository;
 use App\Service\StripeServiceInterface;
@@ -16,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class StripeController extends AbstractController
+class CheckOutController extends AbstractController
 {
     public function __construct(
         private readonly StripeServiceInterface $stripeServiceInterface,
@@ -28,7 +27,23 @@ class StripeController extends AbstractController
         $this->productsRepository = $productsRepository;
     }
 
-    #[Route('/stripe', name: 'app_stripe')]
+    /**
+     * Route for handling the checkout process and payment via Stripe.
+     * 
+     * This function manages the user's checkout process by:
+     * 1. Checking if the user's cart is empty. If it is, it redirects to the cart page with a flash message.
+     * 2. Starting a database transaction to ensure the integrity of the order creation process.
+     * 3. Creating an order object and associating it with the logged-in user.
+     * 4. Iterating over the cart items, calculating the total price, and creating `OrderItem` objects for each cart item.
+     * 5. Persisting the order and order items in the database.
+     * 6. Creating a Stripe payment link using the `StripeServiceInterface`.
+     * 7. Committing the transaction to finalize the order creation process.
+     * 8. If an error occurs during any step, it rolls back the transaction and shows an error message.
+     * 
+     * @param void
+     * @return Response Redirects to Stripe payment URL or the cart page with an error message.
+     */
+    #[Route('/checkout', name: 'app_stripe', methods: ['GET', 'POST'])]
     public function checkout(): Response
     {
         $user = $this->getUser();
@@ -98,7 +113,7 @@ class StripeController extends AbstractController
         }
     }
 
-    #[Route('/order/success/{order}', name: 'app_stripe_success')]
+    #[Route('/checkout/success/{order}', name: 'app_stripe_success')]
     public function success(Order $order): Response
     {
         try {
@@ -106,7 +121,6 @@ class StripeController extends AbstractController
             $order->setStatus(true);
             $order->setPaymentId($this->stripeServiceInterface->getPaymentId());
             $this->entityManagerInterface->persist($order);
-            //$this->entityManagerInterface->flush();
 
             // clean cart
             $getUser = $this->getUser();
@@ -132,21 +146,31 @@ class StripeController extends AbstractController
                 $this->mailService->sendLowStockEmail($getLowStockProducts);
             }
 
-            return $this->render('stripe/success.html.twig', [
+            $getOrderItems = $this->entityManagerInterface->getRepository(OrderItem::class)->findBy(['orders' => $order->getId()]);
+
+            //dd($getOrderItems);
+
+            return $this->render('checkout/success.html.twig', [
                 'order' => $order,
-                'user' => $this->getUser(),
+                'user' => $getUser,
+                'orderItems' => $getOrderItems,
                 'path' => '',
             ]);
         } catch (\Exception $e) {
-            $this->addFlash('error', $e->getMessage());
-            return $this->redirectToRoute('app_cart');
+            //$this->addFlash('error', $e->getMessage());
+            $this->addFlash('error', 'Une erreur est survenue. Veuillez réessayer.');
+            return $this->render('checkout/success.html.twig', [
+                'order' => [],
+                'user' => [],
+                'orderItems' => [],
+                'path' => '',
+            ]);
         }
     }
 
-    #[Route('/stripe/cancel/{order}', name: 'app_stripe_cancel')]
-    public function cancel(Order $order): Response
+    #[Route('/checkout/cancel/{order}', name: 'app_stripe_cancel')]
+    public function cancel(): Response
     {
-
-        return $this->render('stripe/cancel.html.twig', []);
+        return $this->redirectToRoute('app_cart');
     }
 }
