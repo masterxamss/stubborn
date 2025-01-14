@@ -1,0 +1,22 @@
+[
+  {
+    "email": "superuser@mail.com",
+    "roles": [
+      "ROLE_ADMIN"
+    ],
+    "password": "#SuperUser_123",
+    "name": "Jane Doe",
+    "is_verified": true,
+    "delivery_adress": "123 Main St, Anytown USA 12345",
+  },
+  {
+    "email": "jonhdoe@mail.com",
+    "roles": [
+      "ROLE_USER"
+    ],
+    "password": "#JohnDoe_123",
+    "name": "John Doe",
+    "is_verified": true,
+    "delivery_adress": "123 Main St, Anytown USA 12345",
+  }
+]
