@@ -19,8 +19,9 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $productsFile = __DIR__ . '/data/products.json';
-        $usersFile = __DIR__ . '/data/users.json';
+        $projectRoot = dirname(__DIR__, 3);
+        $productsFile = $projectRoot . '/src/DataFixtures/data/products.json';
+        $usersFile = $projectRoot . '/src/DataFixtures/data/users.json';
         $dataProducts = json_decode(file_get_contents($productsFile), true);
         $dataUsers = json_decode(file_get_contents($usersFile), true);
 
