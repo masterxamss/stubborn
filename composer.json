@@ -89,7 +89,7 @@
         "post-update-cmd": [
             "@auto-scripts"
         ],
-        "start":"composer test && symfony serve:start --port=8000",
+        "start":"composer test && symfony server:start --port=8000",
         "test": [
             "php bin/console doctrine:database:create --env=test",
             "php bin/console doctrine:schema:create --env=test",
