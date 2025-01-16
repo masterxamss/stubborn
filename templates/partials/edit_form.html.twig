@@ -11,7 +11,12 @@
 	}}
 	<div class="image-file__container mb-5">
 		<div class="image">
-			<img id="imagePreview-{{ product.id }}" name="edit_image" class="imagePreview" src="{{ product.image ? asset('uploads/' ~ product.image) : asset('images/load_placeholder.png') }}" alt="Image preview">
+			<img
+                id="imagePreview-{{ product.id }}"
+                name="edit_image"
+                class="imagePreview"
+                src="{{ product.image ? asset('uploads/' ~ product.image) : asset('images/load_placeholder.png') }}"
+                alt="Image preview">
 		</div>
 		<div class="input-file">
 			{% set image_value = product.image %}
@@ -88,7 +93,12 @@
 			</button>
 		</div>
 		<!-- Modal -->
-		<div class="modal fade" id="deleteModal-{{ product.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel-{{ product.id }}" aria-hidden="true">
+		<div 
+        class="modal fade"
+        id="deleteModal-{{ product.id }}"
+        tabindex="-1" role="dialog"
+        aria-labelledby="deleteModalLabel-{{ product.id }}"
+        aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">

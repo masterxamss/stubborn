@@ -6,7 +6,10 @@
     <section class="container flex-grow-1 mt-5">
         <div class="row bg-card-white border border-secondary border-opacity-50">
             <div class="col-6 d-flex justify-content-center p-3">
-                <img src="{{ product.image ? asset('uploads/' ~ product.image) : asset('images/load_placeholder.png') }}" alt="Product image" width="50%">
+                <img 
+                src="{{ product.image ? asset('uploads/' ~ product.image) : asset('images/load_placeholder.png') }}" 
+                alt="Product image" 
+                width="50%">
             </div>
             <div class="col-6 p-5">
                 <form action="{{ path('app_add_to_cart') }}" class="h-100" method="POST">

@@ -8,7 +8,10 @@ use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
- * @extends ServiceEntityRepository<Products>
+ * Repository for managing Products entities.
+ * 
+ * This repository contains methods for querying products based on different conditions, such as price range and low stock.
+ * It extends the base ServiceEntityRepository to provide custom queries for product management.
  */
 class ProductsRepository extends ServiceEntityRepository
 {
@@ -17,6 +20,15 @@ class ProductsRepository extends ServiceEntityRepository
         parent::__construct($registry, Products::class);
     }
 
+    /**
+     * Find products based on a specified price range.
+     * 
+     * This method generates a query that retrieves products within a given price range (e.g., 10-29, 30-35, 35-50).
+     * 
+     * @param string|null $priceRange The price range to filter products by (e.g., '10-29').
+     * 
+     * @return Products[] The list of products matching the price range.
+     */
     public function findByPriceRange(?string $priceRange): array
     {
         $queryBuilder = $this->createQueryBuilder('p');
@@ -44,6 +56,13 @@ class ProductsRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
+    /**
+     * Find products with low stock (less than 3 items in any size).
+     * 
+     * This method retrieves products that have less than 3 items in stock for any of the sizes: XS, S, M, L, XL.
+     * 
+     * @return Products[] The list of products with low stock.
+     */
     public function findLowStockProducts()
     {
         $sql = "
