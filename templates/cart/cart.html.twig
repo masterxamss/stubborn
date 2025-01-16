@@ -12,7 +12,10 @@
 				<div class="row mt-3 border border-secondary border-opacity-50 p-3 bg-card-white bg-opacity-25">
 					<div class="col-12 d-flex flex-row">
 						<div class="col-3">
-							<img src="{{ cart.product.image ? asset('uploads/' ~ cart.product.image) : asset('images/load_placeholder.png') }}" alt="product-image" width="50%">
+							<img 
+                            src="{{ cart.product.image ? asset('uploads/' ~ cart.product.image) : asset('images/load_placeholder.png') }}"
+                            alt="product-image"
+                            width="50%">
 						</div>
 						<div class="col-3">
 							<h5 class="border-bottom border-warning p-2 fw-bold">Nom</h5>

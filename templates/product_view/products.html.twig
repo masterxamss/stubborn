@@ -23,7 +23,11 @@
 			{% for product in products %}
 				<div class="col">
 					<div class="card h-100 shadow w-100">
-						<img src="{{ product.image ? asset('uploads/' ~ product.image) : asset('images/load_placeholder.png') }}" class="card-img-top" alt="Product image" style="width: 100%;">
+						<img 
+                        src="{{ product.image ? asset('uploads/' ~ product.image) : asset('images/load_placeholder.png') }}"
+                        class="card-img-top" 
+                        alt="Product image" 
+                        style="width: 100%;">
 						<div class="card-footer d-flex justify-content-between p-3 w-100">
 							<div>
 								<h5 class="card-title">{{ product.name }}</h5>
