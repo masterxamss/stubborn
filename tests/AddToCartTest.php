@@ -39,12 +39,6 @@ class AddToCartTest extends WebTestCase
 
     protected function tearDown(): void
     {
-        $connection = $this->entityManager->getConnection();
-
-        // Delete data from tables
-        $connection->executeStatement('DELETE FROM cart');
-        $connection->executeStatement('DELETE FROM products');
-        $connection->executeStatement('DELETE FROM user');
         parent::tearDown();
 
         if ($this->entityManager) {
