@@ -148,8 +148,6 @@ class CheckOutController extends AbstractController
 
             $getOrderItems = $this->entityManagerInterface->getRepository(OrderItem::class)->findBy(['orders' => $order->getId()]);
 
-            //dd($getOrderItems);
-
             return $this->render('checkout/success.html.twig', [
                 'order' => $order,
                 'user' => $getUser,
