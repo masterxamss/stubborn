@@ -92,7 +92,7 @@
         "start":"composer test && symfony server:start --port=8000",
         "test": [
             "php bin/console doctrine:database:create --env=test",
-            "php bin/console doctrine:schema:create --env=test",
+            "php bin/console doctrine:migrations:migrate --env=test",
             "php bin/phpunit",
             "php bin/console doctrine:database:drop --env=test --force"
         ]

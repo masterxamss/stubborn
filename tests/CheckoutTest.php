@@ -59,19 +59,17 @@ class CheckoutTest extends WebTestCase
 
     /**
      * Tear down the test environment.
-     * Cleans up the database after each test.
      * 
      * @return void
      */
     protected function tearDown(): void
     {
-        $connection = $this->entityManager->getConnection();
-        $connection->executeStatement('DELETE FROM cart');
-        $connection->executeStatement('DELETE FROM order_item');
-        $connection->executeStatement('DELETE FROM `order`');
-        $connection->executeStatement('DELETE FROM products');
-        $connection->executeStatement('DELETE FROM user');
         parent::tearDown();
+
+        if ($this->entityManager) {
+            $this->entityManager->close();
+        }
+        $this->entityManager = null;
     }
 
     /**

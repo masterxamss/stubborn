@@ -24,8 +24,7 @@ class Cart
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    //#[ORM\ManyToOne(inversedBy: 'carts')]
-    #[ORM\ManyToOne(targetEntity: Products::class, fetch: 'EAGER')] // EAGER loading
+    #[ORM\ManyToOne(targetEntity: Products::class, inversedBy: 'carts')]
     #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id')]
     private ?Products $product = null;
 

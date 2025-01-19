@@ -22,7 +22,7 @@ class Order
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $paymentId = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'orders')]
     private ?User $user = null;
 
     #[ORM\Column]
