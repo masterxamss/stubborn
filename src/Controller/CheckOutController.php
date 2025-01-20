@@ -167,8 +167,16 @@ class CheckOutController extends AbstractController
     }
 
     #[Route('/checkout/cancel/{order}', name: 'app_stripe_cancel')]
-    public function cancel(): Response
+    public function cancel(Order $order): Response
     {
+        $orderItem = $this->entityManagerInterface->getRepository(OrderItem::class)->findBy(['orders' => $order->getId()]);
+        foreach ($orderItem as $item) {
+            $this->entityManagerInterface->remove($item);
+        }
+
+        $this->entityManagerInterface->remove($order);
+        $this->entityManagerInterface->flush();
+
         return $this->redirectToRoute('app_cart');
     }
 }
