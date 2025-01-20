@@ -1,4 +1,4 @@
-# ** \- Instructions de déploiement**
+# - Instructions de déploiement
 
 Le processus d'installation doit être effectué dans l'ordre indiqué dans les lignes suivantes.
 
